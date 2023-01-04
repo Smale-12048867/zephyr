@@ -61,3 +61,4 @@ if(CONFIG_ETH_NATIVE_POSIX)
 endif()
 
 add_subdirectory(phy)
+add_subdirectory(dwc_xgmac)

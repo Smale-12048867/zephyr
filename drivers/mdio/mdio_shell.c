@@ -31,6 +31,8 @@ LOG_MODULE_REGISTER(mdio_shell, CONFIG_LOG_DEFAULT_LEVEL);
 #define DT_DRV_COMPAT zephyr_mdio_gpio
 #elif DT_HAS_COMPAT_STATUS_OKAY(nxp_enet_mdio)
 #define DT_DRV_COMPAT nxp_enet_mdio
+#elif DT_HAS_COMPAT_STATUS_OKAY(snps_dwcxgmac_mdio)
+#define DT_DRV_COMPAT snps_dwcxgmac_mdio
 #else
 #error "No known devicetree compatible match for MDIO shell"
 #endif
