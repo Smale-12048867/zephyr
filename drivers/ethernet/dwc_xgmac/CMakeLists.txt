@@ -3,3 +3,6 @@
 
 zephyr_library()
 zephyr_library_sources_ifdef(CONFIG_ETH_DWC_XGMAC eth_dwc_xgmac.c)
+if(CONFIG_ETH_DWC_XGMAC_PHC)
+    zephyr_library_sources_ifdef(CONFIG_PTP_CLOCK ptp_dwc_xgmac.c)
+endif()

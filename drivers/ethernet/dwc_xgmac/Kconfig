@@ -73,6 +73,7 @@ config ETH_DWC_XGMAC_ARP_OFFLOAD
 	help
 	  Enable ARP hardware offloading support.
 
+	source "drivers/ethernet/dwc_xgmac/Kconfig.ptp"
 endif # ETH_DWC_XGMAC
 
 endmenu

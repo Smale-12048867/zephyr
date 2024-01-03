@@ -1,0 +1,25 @@
+#
+#Intel Hard Processor System DesignWare Cores XGMAC Ethernet controller driver
+#configuration options
+#
+#Copyright(c) 2023, Intel Corporation
+#SPDX - License - Identifier : Apache - 2.0
+#
+
+DT_COMPAT_DWC_XGMAC_PHC := snps,dwcxgmac-phc
+
+menu "DWC XGMAC PTP clock configuration"
+
+config ETH_DWC_XGMAC_PHC
+	bool "Synopsys DesignWareCore XGMAC PTP hardware clock driver"
+	default y if $(dt_compat_enabled,$(DT_COMPAT_DWC_XGMAC_PHC))
+	help
+	  This is a driver for the Synopsys DesignWare XGMAC PTP hardware clock, also referred to
+	  as "DesignWare Cores Ethernet XGMAC". Hardware versions
+	  3.x are supported.
+
+	  Platform specific glue support is also required. This driver is
+	  currently available on targets using the Intel Agilex5 series.
+	depends on ETH_DWC_XGMAC
+
+endmenu

@@ -194,6 +194,10 @@ struct eth_dwc_xgmac_config {
 	 */
 	const struct device *phy_dev;
 	/*
+	 * PTP H/W clock device pointer
+	 */
+	const struct device *ptp_clk_dev;
+	/*
 	 * Interrupts configuration function pointer
 	 */
 	eth_config_irq_t irq_config_fn;
@@ -1840,6 +1844,14 @@ static struct net_stats_eth *eth_dwc_xgmac_stats(const struct device *dev)
 }
 #endif
 
+#if defined(CONFIG_PTP_CLOCK)
+static const struct device *eth_dwc_xgmac_get_ptp_clock(const struct device *dev)
+{
+	const struct eth_dwc_xgmac_config *dev_conf = (struct eth_dwc_xgmac_config *)dev->config;
+	return dev_conf->ptp_clk_dev;
+}
+#endif
+
 static const struct ethernet_api eth_dwc_xgmac_apis = {
 	.iface_api.init = eth_dwc_xgmac_iface_init,
 	.send = eth_dwc_xgmac_send,
@@ -1851,6 +1863,9 @@ static const struct ethernet_api eth_dwc_xgmac_apis = {
 #ifdef CONFIG_NET_STATISTICS_ETHERNET
 	.get_stats = eth_dwc_xgmac_stats,
 #endif /* CONFIG_NET_STATISTICS_ETHERNET */
+#ifdef CONFIG_PTP_CLOCK
+	.get_ptp_clock = eth_dwc_xgmac_get_ptp_clock,
+#endif /* CONFIG_PTP_CLOCK */
 };
 
 #define XGMAC_SNPS_DESIGNWARE_RESET_SPEC_INIT(port) .reset = RESET_DT_SPEC_INST_GET(port),
@@ -1963,7 +1978,9 @@ static const struct ethernet_api eth_dwc_xgmac_apis = {
 		.mac_cfg.je = DT_INST_PROP(port, jumbo_pkt_en),                                    \
 		.tcq_config = &eth_dwc_xgmac##port##_tcq,                                          \
 		.phy_dev =                                                                         \
-			(const struct device *)DEVICE_DT_GET(DT_INST_PHANDLE(port, phy_handle)),   \
+			(const struct device *)DEVICE_DT_GET(DT_INST_PHANDLE(port, phy_handle)),       \
+		.ptp_clk_dev =                                                                     \
+		    (const struct device *)DEVICE_DT_GET(DT_CHILD(DT_DRV_INST(port), phc_0)),        \
 		.irq_config_fn = eth_dwc_xgmac##port##_irq_config,                                 \
 		.irq_enable_fn = eth_dwc_xgmac##port##_irq_enable,                                 \
 		IF_ENABLED(DT_INST_NODE_HAS_PROP(port, resets),                                    \
