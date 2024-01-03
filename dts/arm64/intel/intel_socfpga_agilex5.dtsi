@@ -208,6 +208,8 @@
 	};
 
 	xgmac0: xgmac@10810000 {
+		#address-cells = <1>;
+		#size-cells = <0>;
 		compatible = "snps,dwcxgmac";
 		reg = <0x10810000 0x10000>;
 		interrupt-parent = <&gic>;
@@ -221,6 +223,15 @@
 		pblx8;
 		blen32;
 		status = "disabled";
+
+		phc0: phc@0 {
+			req-frq = <4000000000>; /*Hz*/
+			ref-frq = <4000000000>; /*Hz*/
+			clk-res = <1>;  /*ns*/
+			status = "disabled";
+			reg = <0>;
+			compatible = "snps,dwcxgmac-phc";
+		};
 	};
 
 	mdio0: mdio@10810000 {
