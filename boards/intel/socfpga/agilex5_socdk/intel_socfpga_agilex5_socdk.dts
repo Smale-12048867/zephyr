@@ -57,5 +57,9 @@
 	phy0: phy@0 {
 		compatible = "ethernet-phy";
 		reg = <0>;
+
+		phy_vendor {
+			compatible = "mrvl-88e151x";
+		};
 	};
 };

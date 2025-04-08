@@ -1,0 +1,18 @@
+# Copyright (c) 2021 IP-Logix Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+# Common fields for MIIPHY devices
+
+description: Marvel 88e151x MII PHY Venodr specific configuration
+
+compatible: "mrvl-88e151x"
+
+include: base.yaml
+
+properties:
+  tx-delay-en:
+    type: boolean
+    description: If enabled transmit clock internally delayed
+  rx-delay-en:
+    type: boolean
+    description: If enabled receive clock internally delayed

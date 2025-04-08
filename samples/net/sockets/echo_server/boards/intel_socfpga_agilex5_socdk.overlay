@@ -18,5 +18,9 @@
 
 	phy0: phy@0 {
 		status = "okay";
+
+		phy_vendor {
+			status = "okay";
+		};
 	};
 };
